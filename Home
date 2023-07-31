@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detección de Cámara</title>
+</head>
+<body>
+    <h1>Detección de Cámara</h1>
+    <video id="videoElement" width="640" height="480" autoplay></video>
+    <button id="startButton">Comenzar</button>
+    <script>
+        var videoStream;
+
+        function startStreaming() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        var videoElement = document.getElementById('videoElement');
+                        videoElement.srcObject = stream;
+                        videoStream = stream;
+                    })
+                    .catch(function (error) {
+                        console.error('Error al acceder a la cámara: ', error);
+                    });
+            } else {
+                console.error('La API de MediaDevices no está soportada en este navegador.');
+            }
+        }
+
+        document.getElementById('startButton').addEventListener('click', function () {
+            startStreaming();
+        });
+    </script>
+</body>
+</html>
